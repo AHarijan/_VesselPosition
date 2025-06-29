@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Password Reset Sent</title>
+    <link rel="stylesheet" href="{% static 'css/Auth.css' %}">
+  </head>
+  <body>
+    <video class="video-background" autoplay muted loop> <source src="{% static 'assets/Images/ONE Vessel.mp4' %}" type="video/mp4"> Your browser does not support the video tag. </video>
+    <div class="login">
+        <form method="post">
+            {% csrf_token %}
+            <img src="{% static 'assets/Images/Logo.png' %}" alt="">
+            <h1>RESET LINK SENT</h1>
+            
+            <center>
+                <div class="signup_link" style="padding: 10px;">A password reset link has been sent to your email. Please note that it <b>expires in 10 minutes</b>!</div>
+            </center>
+        </form>
+    </div>
+  </body>
+</html>

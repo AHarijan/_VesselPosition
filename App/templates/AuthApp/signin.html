@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/Auth.css' %}">
+  </head>
+  <body>
+    <div class="page">
+      <div class="login">
+        
+        <video class="video-background" autoplay muted loop> <source src="{% static 'assets/Images/ONE Vessel.mp4' %}" type="video/mp4"> Your browser does not support the video tag. </video>
+        <form method="POST" autocomplete="off" action="{% url 'signin' %}">
+          {% csrf_token %}
+          <img src="{% static 'assets/Images/Logo.png' %}" alt="">
+          <h1>LOG IN</h1>
+          <div class="cred">
+            <input type="text" required name="username" id="" required placeholder="Username">
+            <input type="password" required name="password" id="" required placeholder="Password">
+          </div>
+          <button class="botton">LogIn</button>
+
+          <div class="Bottom">
+            <p><a href="{%url 'usersignup'%}" class="add">Register</a></p>
+            <p><a href="{%url 'forgotpass'%}" class="add">Forgot Password</a></p>
+          </div>
+        </form>
+        {% if error %}
+        <script>
+            alert("{{ error }}");
+        </script>
+        {% endif %}
+      </div>
+    </div>
+
+  </body>
+</html>

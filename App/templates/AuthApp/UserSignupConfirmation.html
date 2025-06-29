@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Password Reset Sent</title>
+    <link rel="stylesheet" href="{% static 'css/Auth.css' %}">
+  </head>
+  <body>
+    <video class="video-background" autoplay muted loop> <source src="{% static 'assets/Images/ONE Vessel.mp4' %}" type="video/mp4"> Your browser does not support the video tag. </video>
+    <div class="login">
+        <form method="post">
+            {% csrf_token %}
+            <img src="{% static 'assets/Images/Logo.png' %}" alt="">
+            <h1>RESET LINK SENT</h1>
+            
+            <center>
+                <div class="signup_link" style="padding: 10px;">Registration successful. <br> Your details have been sent via email to alakar_harijan@outlook.com. <br> Your user ID and Password shall be sent soon to you. <br> Thank you</b>!</div>
+            </center>
+        </form>
+    </div>
+  </body>
+</html>

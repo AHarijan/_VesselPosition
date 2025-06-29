@@ -1,0 +1,649 @@
+{% extends 'Pages/base.html' %}
+{% load static %}
+{% block content %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // For users, we want to filter the table immediately based on their ports
+            if ({{ is_user|yesno:"true,false" }}) {
+                filterTable();
+            }
+            
+            // Add event listener to the port dropdown
+            document.getElementById('port').addEventListener('change', function() {
+                filterTable();
+                
+                // For users, also update the berth dropdown when port changes
+                if ({{ is_user|yesno:"true,false" }}) {
+                    fetchBerths();
+                }
+            });
+        });
+
+        function filterTable() {
+            const selectedPort = document.getElementById('port').value;
+            const rows = document.querySelectorAll('#myTable tbody tr');
+            
+            rows.forEach(row => {
+                const portCell = row.querySelector('.portColumn');
+                
+                if (selectedPort === "" || portCell.textContent === selectedPort) {
+                    row.style.display = ''; // Show the row
+                } else {
+                    row.style.display = 'none'; // Hide the row
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('exportBtn').addEventListener('click', function (event) {
+            // Get the selected port
+            const selectedPort = document.getElementById('port').value;
+
+            // Check if a port is selected
+            if (!selectedPort) {
+                alert('Please select a port before exporting.'); // Show an alert
+                return; // Stop further execution
+            }
+
+            // Proceed with the export if a port is selected
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet('LineUp Data');
+
+            // Add 3 blank rows
+            worksheet.addRow([]);
+            worksheet.addRow([]);
+            worksheet.addRow([]);
+
+            // Merge cells A1 to M2 and add the header
+            worksheet.mergeCells('A1:K2');
+            const mergedCell = worksheet.getCell('A1');
+            mergedCell.value = `ISS SHIPPING VESSEL LINEUP FOR ${selectedPort}`;
+            mergedCell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } }; // White text
+            mergedCell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FF0070C0' } // Blue background (hex: #0070C0)
+            };
+            mergedCell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }; // Wrap text
+
+            // Add table headers (excluding the hidden port column, Vessel Type, Charterer Agent, and the last two columns)
+            const headers = [];
+            const headerRows = document.querySelectorAll('#myTable thead th');
+            headerRows.forEach((header, index) => {
+                // Skip the hidden port column, Vessel Type, Charterer Agent, and the last two columns (Edit and Delete)
+                if (
+                    !header.classList.contains('portColumn') &&
+                    !header.classList.contains('Ticon') &&
+                    header.innerText.trim() !== 'Vessel Type' &&
+                    header.innerText.trim() !== 'Charterer Agent'
+                ) {
+                    headers.push(header.innerText.trim());
+                }
+            });
+            worksheet.addRow(headers);
+
+            // Style the headers
+            const headerRow = worksheet.getRow(4); // Row 4 contains the headers
+            headerRow.eachCell(cell => {
+                cell.font = { bold: true, color: { argb: 'FFFFFFFF' } }; // White text
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FF4F81BD' } // Dark blue background (hex: #4F81BD)
+                };
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' },
+                };
+                cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }; // Wrap text
+            });
+
+            // Add visible table rows (excluding the hidden port column, Vessel Type, Charterer Agent, and the last two columns)
+            const tableRows = document.querySelectorAll('#myTable tbody tr');
+            tableRows.forEach(row => {
+                // Check if the row is visible (not hidden by the filter)
+                if (row.style.display !== 'none') {
+                    const rowData = [];
+                    const cells = row.querySelectorAll('td');
+                    cells.forEach((cell, index) => {
+                        // Skip the hidden port column, Vessel Type, Charterer Agent, and the last two columns (Edit and Delete)
+                        if (
+                            !cell.classList.contains('portColumn') &&
+                            !cell.classList.contains('Ticon') &&
+                            !cell.classList.contains('vesselTypeColumn') && // Add this class to the Vessel Type column in your HTML
+                            !cell.classList.contains('chartererAgentColumn') // Add this class to the Charterer Agent column in your HTML
+                        ) {
+                            rowData.push(cell.innerText.trim());
+                        }
+                    });
+                    worksheet.addRow(rowData);
+                }
+            });
+
+            // Style the table rows
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber > 4) { // Skip the header row and merged cells
+                    row.eachCell(cell => {
+                        cell.border = {
+                            top: { style: 'thin' },
+                            left: { style: 'thin' },
+                            bottom: { style: 'thin' },
+                            right: { style: 'thin' },
+                        };
+                        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+                    });
+                }
+            });
+
+            // Set fixed column widths
+            worksheet.columns = [
+                { width: 22 }, // Column A
+                { width: 20 }, // Column B
+                { width: 21 }, // Column C
+                { width: 21 }, // Column D
+                { width: 21 }, // Column E
+                { width: 15 }, // Column F
+                { width: 15 }, // Column G
+                { width: 10 }, // Column H
+                { width: 15 }, // Column I
+                { width: 17 }, // Column J
+                { width: 20 }, // Column K
+            ];
+
+            // Write the workbook to a file
+            workbook.xlsx.writeBuffer().then(buffer => {
+                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `ISS_Shipping_Vessel_Lineup_${selectedPort}.xlsx`; // Dynamic file name with port name
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(error => {
+                console.error('Error creating workbook:', error);
+            });
+        });
+        });
+
+        
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const autocompleteFields = [
+                { id: 'shipper', datalistId: 'shipper-suggestions', field: 'Shipper' },
+                { id: 'receiver', datalistId: 'receiver-suggestions', field: 'Receiver' },
+                { id: 'principal', datalistId: 'principal-suggestions', field: 'Principal' },
+                { id: 'owner', datalistId: 'owner-suggestions', field: 'Owner' },
+                { id: 'lastport', datalistId: 'lastport-suggestions', field: 'LastPort' },
+                { id: 'nextport', datalistId: 'nextport-suggestions', field: 'NextPort' },
+                { id: 'loadPort', datalistId: 'loadPort-suggestions', field: 'LoadPort' },
+                { id: 'dischargePort', datalistId: 'dischargePort-suggestions', field: 'DischargePort' },
+                { id: 'cAgent', datalistId: 'cAgent-suggestions', field: 'ChartererAgent' },
+                { id: 'agent', datalistId: 'agent-suggestions', field: 'OwnersAgent' },
+            ];
+
+            autocompleteFields.forEach(({ id, datalistId, field }) => {
+                const inputField = document.getElementById(id);
+                const datalist = document.getElementById(datalistId);
+
+                if (inputField && datalist) {
+                    inputField.addEventListener('input', function () {
+                        const query = inputField.value.trim();
+                        console.log(`Input detected for field: ${field}, query: ${query}`);
+
+                        if (query.length >= 2) { // Fetch suggestions only if at least 2 characters are typed
+                            fetch(`/get-autocomplete-suggestions/?query=${query}&field=${field}`)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    console.log(`Suggestions received for field: ${field}`, data);
+                                    datalist.innerHTML = ''; // Clear previous suggestions
+                                    data.forEach(value => {
+                                        const option = document.createElement('option');
+                                        option.value = value;
+                                        datalist.appendChild(option);
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching suggestions:', error);
+                                });
+                        } else {
+                            datalist.innerHTML = ''; // Clear suggestions if query is too short
+                        }
+                    });
+                } else {
+                    console.error(`Input field or datalist not found for field: ${field}`);
+                }
+            });
+        });
+
+    </script>
+    <main>
+        <section class="mainsection">
+            <form action="/LineUpForm/" method="POST" onsubmit="return lineUpForm()">
+                {% csrf_token %}
+                <div class="maincontainer">
+                    <section class="container1">
+                        <div class="flex2_div">
+                            <label class="lable1" for="lineupdate">LineUp Date:</label>
+                            <input class="fill" type="date" name="lineupdate" id="currentDate" >
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="port">Port:</label>
+                            <select id="port" name="port" required onchange="filterTable()">
+                                <option value="">Select Port</option>
+                                {% if request.session.usertype == 'user' %}
+                                    {% for port in ports %}
+                                        <option value="{{ port }}" selected>{{ port }}</option>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for port in ports %}
+                                        <option value="{{ port }}">{{ port }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="berth">Berth:</label>
+                            <select id="berth" name="berth" required> 
+                                {% if request.session.usertype == 'user' %}style="display: block;"{% endif %}>
+                                <option value="">Select Berth</option>
+                                {% for berth in user_berths %}
+                                    <option value="{{ berth }}">{{ berth }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+
+                        <script>
+                            function fetchBerths() {
+                                const selectedPort = document.getElementById('port').value;
+                                const berthDropdown = document.getElementById('berth');
+                                
+                                // Clear existing options
+                                berthDropdown.innerHTML = '<option value="">Select Berth</option>';
+                                
+                                if (selectedPort) {
+                                    // For users, filter the preloaded berths by selected port
+                                    if ({{ is_user|yesno:"true,false" }}) {
+                                        // Get all berths for this port from the user's ports
+                                        const userPorts = {{ user_ports|safe }};
+                                        if (userPorts.includes(selectedPort)) {
+                                            fetch(`/get-berths/?port=${selectedPort}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    data.berths.forEach(berth => {
+                                                        const option = document.createElement('option');
+                                                        option.value = berth;
+                                                        option.textContent = berth;
+                                                        berthDropdown.appendChild(option);
+                                                    });
+                                                });
+                                        }
+                                    } 
+                                    // For admins: normal AJAX fetch
+                                    else {
+                                        fetch(`/get-berths/?port=${selectedPort}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                const sortedBerths = data.berths.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+                                                sortedBerths.forEach(berth => {
+                                                    const option = document.createElement('option');
+                                                    option.value = berth;
+                                                    option.textContent = berth;
+                                                    berthDropdown.appendChild(option);
+                                                });
+                                            });
+                                    }
+                                }
+                            }
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const portSelect = document.getElementById('port');
+                                const berthSelect = document.getElementById('berth');
+                                
+                                // Initialize based on user type
+                                if ({{ is_user|yesno:"true,false" }}) {
+                                    // For users: show berth dropdown immediately
+                                    berthSelect.style.display = 'block';
+                                    
+                                    // If default port is selected, show its berths
+                                    if (portSelect.value) {
+                                        fetchBerths();
+                                    }
+                                    
+                                    // Still need to handle port changes
+                                    portSelect.addEventListener('change', fetchBerths);
+                                } else {
+                                    // For admins: normal behavior
+                                    portSelect.addEventListener('change', fetchBerths);
+                                    if (portSelect.value) {
+                                        fetchBerths();
+                                    }
+                                }
+                            });
+
+                            
+
+                        </script>
+                        
+                        <div class="flex2_div">
+                            <label class="lable1" for="imono">IMO No:</label>
+                            <input class="fill" type="text" name="imono" id="imono">
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                // Add event listener to IMO field
+                                document.getElementById('imono').addEventListener('change', function() {
+                                    const imoNo = this.value.trim();
+                                    
+                                    if (imoNo) {
+                                        fetch(`/get-vessel-details/?imo=${imoNo}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    // Populate the form fields
+                                                    document.getElementById('vesselSlt').value = data.vessel.slt || '';
+                                                    document.getElementById('vessel').value = data.vessel.name || '';
+                                                    document.getElementById('loa').value = data.vessel.loa || '';
+                                                    document.getElementById('beam').value = data.vessel.beam || '';
+                                                    document.getElementById('draft').value = data.vessel.draft || '';
+                                                } else {
+                                                    // Clear fields if no match found
+                                                    clearVesselFields();
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching vessel details:', error);
+                                                clearVesselFields();
+                                            });
+                                    } else {
+                                        clearVesselFields();
+                                    }
+                                });
+
+                                function clearVesselFields() {
+                                    document.getElementById('vesselSlt').value = '';
+                                    document.getElementById('vessel').value = '';
+                                    document.getElementById('loa').value = '';
+                                    document.getElementById('beam').value = '';
+                                    document.getElementById('draft').value = '';
+                                }
+                            });
+                        </script>
+                        <div class="flex2_div">
+                            <label class="lable1" for="vesselSlt">Slt. Name:</label>
+                            <select class="fillvst" type="text" name="vesselSlt" id="vesselSlt">
+                                <option value="">Slt.</option>
+                                <option value="MT">MT</option>
+                                <option value="MV">MV</option>
+                            </select>
+                            <input class="fillV" type="text" name="vessel" id="vessel">
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="loa">LOA:</label>
+                            <input class="fill" type="text" name="loa" id="loa">
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="beam">Beam:</label>
+                            <input class="fill" class="fill" type="text" name="beam" id="beam">
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="draft">Draft:</label>
+                            <input class="fill" type="text" name="draft" id="draft">
+                        </div>
+                        
+                    </section>
+                    <section class="container1">
+                        <div class="container1-2">
+                            <label class="etadatel" for="etadate"> Arrived /ETA:</label>
+                            <input class="etadatei" type="date" name="etadate" id="etadate"  >
+                            <label class="etatimel" for="etatime"> </label>
+                            <input class="etatimei" type="time" name="etatime" id="etatime" >
+                        </div>
+                        <div class="container1-2">
+                            <label class="etbdatel" for="etbdate"> Berthed /ETB:</label>
+                            <input class="etbdatei" type="date" name="etbdate" id="etbdate" >
+                            <label class="etbtimel" for="etbtime"> </label>
+                            <input class="etbtimei" type="time" name="etbtime" id="etbtime" >
+                        </div>
+                        <div class="container1-2">
+                            <label class="etcdatel" for="etcdate"> Departed /ATD:</label>
+                            <input class="etcdatei" type="date" name="etcdate" id="etcdate" >
+                            <label class="etctimel" for="etctime"> </label>
+                            <input class="etctimei" type="time" name="etctime" id="etctime" >
+                        </div>                
+                        <div class="flex2_div">
+                            <label class="lable1" for="cargo">Cargo 1:</label>
+                            <input class="fill" type="text" name="cargo1" id="cargo1">
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cargoqty">Cargo Qty 1:</label>
+                            <input class="fillqty1" type="number" name="cargoqty1" id="cargoQtyF1">
+                            <select class="unitsec1" name="cargoqtyU1" id="cargoQtyU1">
+                                <option value="">Units</option>
+                                <option value="Mts">Mts</option>
+                                <option value="Boxes">Boxes</option>
+                                <option value="Bags">Bags</option>
+                            </select>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cargo">Cargo 2:</label>
+                            <input class="fill" type="text" name="cargo2" id="" placeholder="Optional">
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cargoqty">Cargo Quantity 2:</label>
+                            <input class="fillqty2" type="number" name="cargoqty2" id="" value=0>
+                            <select class="unitsec2" name="cargoqtyU2" id="" >
+                                <option value="">Units</option>
+                                <option value="Mts">Mts</option>
+                                <option value="Boxes">Boxes</option>
+                                <option value="Bags">Bags</option>
+                            </select>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cargo">Cargo 3:</label>
+                            <input class="fill" type="text" name="cargo3" id="" placeholder="Optional">
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cargoqty">Cargo Quantity 3:</label>
+                            <input class="fillqty3" type="number" name="cargoqty3" id="" value=0 >
+                            <select class="unitsec3" name="cargoqtyU3" id="" >
+                                <option value="">Units</option>
+                                <option value="Mts">Mts</option>
+                                <option value="Boxes">Boxes</option>
+                                <option value="Bags">Bags</option>
+                            </select>
+                        </div>
+                    </section>
+                    <section class="container1">
+    
+                        <div class="flex2_div">
+                            <label class="lable1" for="vesseltype">Vessel Type:</label>
+                            <select name="vesseltype" id="vesseltype">
+                                <option value="">Select</option>
+                                <option value="Break Bulk">Break Bulk</option>
+                                <option value="Dry Bulk">Dry Bulk</option>
+                                <option value="General Bulk">General Bulk</option>
+                                <option value="Crude Oil Carrier">Crude Oil Carrier</option>
+                                <option value="Edible Oil Carrier">Edible Oil Carrier</option>
+                                <option value="Chemical Carrier">Chemical Carrier</option>
+                                <option value="Gas Carrier">Gas Carrier</option>
+                                <option value="Container Vessel">Container Vessel</option>
+                            </select>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="operation">Operation:</label>
+                            <select name="operation" id="operation" >
+                                <option value="">Select</option>
+                                <option value="Load">Load</option>
+                                <option value="Discharge">Discharge</option>
+                                <option value="Load/Discharge">Load/Discharge</option>
+                            </select>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="shipper">Shipper:</label>
+                            <input class="fill" type="text" name="shipper" id="shipper" placeholder="Optional" autocomplete="off" list="shipper-suggestions">
+                            <datalist id="shipper-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="receiver">Receiver:</label>
+                            <input class="fill" type="text" name="receiver" id="receiver" placeholder="Optional" autocomplete="off" list="receiver-suggestions">
+                            <datalist id="receiver-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="principal">Charterer:</label>
+                            <input class="fill" type="text" name="principal" id="principal" placeholder="Optional" autocomplete="off" list="principal-suggestions">
+                            <datalist id="principal-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="owner">Owner:</label>
+                            <input class="fill" type="text" name="owner" id="owner" placeholder="Optional" autocomplete="off" list="owner-suggestions">
+                            <datalist id="owner-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cos/for">Coastal/Foreign:</label>
+                            <select name="C/F" id="cos/for" >
+                                <option value="">Select</option>
+                                <option value="Coastal">Coastal</option>
+                                <option value="Foreign">Foreign</option>
+                            </select>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="lastport">Last Port:</label>
+                            <input class="fill" type="text" name="lastport" id="lastport" autocomplete="off" list="lastport-suggestions">
+                            <datalist id="lastport-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="nextport">Next Port:</label>
+                            <input class="fill" type="text" name="nextport" id="nextport" autocomplete="off" list="nextport-suggestions">
+                            <datalist id="nextport-suggestions"></datalist>
+                        </div>
+                    </section>
+                    
+                    <section class="container1">
+                        <div class="flex2_div">
+                            <label class="lable1" for="loadPort">Load Port:</label>
+                            <input class="fill" type="text" name="loadPort" id="loadPort" placeholder="Optional" autocomplete="off" list="loadPort-suggestions">
+                            <datalist id="loadPort-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="dischargePort">Discharge Port:</label>
+                            <input class="fill" type="text" name="dischargePort" id="dischargePort" placeholder="Optional" autocomplete="off" list="dischargePort-suggestions">
+                            <datalist id="dischargePort-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="cAgent">Chrts Agent:</label>
+                            <input class="fill" type="text" name="cAgent" id="cAgent" placeholder="Optional" autocomplete="off" list="cAgent-suggestions">
+                            <datalist id="cAgent-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="ownerAgent">Owners Agent:</label>
+                            <input class="fill" type="text" name="agent" id="agent" placeholder="Optional" autocomplete="off" list="agent-suggestions">
+                            <datalist id="agent-suggestions"></datalist>
+                        </div>
+                        <div class="flex2_div">
+                            <label class="lable1" for="status">Current Status:</label>
+                            <select name="status" id="CurrStatus" >
+                                <option value="">Select</option>
+                                <option value=" At Berth">At Berth</option>
+                                <option value="Arrived">Arrived</option>
+                                <option value="Expected">Expected</option>
+                                <option value="Sailed">Sailed</option>
+                            </select>
+                        </div>
+                        <section class="inflex2">
+                            <textarea name="textarea" id="textarea" placeholder="Remarks"></textarea>            
+                        </section>
+                    </section>
+                    <section class="containersub">
+                        {% if request.session.usertype == 'Admin' %}
+                        <input class="Submitbotton" type="reset" name="clearAll" value="CLEAR ALL" id="clearAll"></input>
+                        <input class="Submitbotton" type="submit" name="submit" value="SUBMIT LINEUP" id="submit"></input>
+                        <button id="exportBtn" type="button" class="Submitbotton">Export to Excel</button>
+
+                        {% elif request.session.usertype == 'Superuser' %}
+                        <input class="Submitbotton" type="reset" name="clearAll" value="CLEAR ALL" id="clearAll"></input>
+                        <input class="Submitbotton" type="submit" name="submit" value="SUBMIT LINEUP" id="submit"></input>
+                        <button id="exportBtn" type="button" class="Submitbotton">Export to Excel</button>
+
+                        {% elif request.session.usertype == 'User' %}
+                        <input class="Submitbotton" type="reset" name="clearAll" value="CLEAR ALL" id="clearAll"></input>
+                        <input class="Submitbotton" type="submit" name="submit" value="SUBMIT LINEUP" id="submit">
+                        {% endif %}
+                    </section>   
+                </div>
+            </form>
+            <Section class="TableArea">
+                <table id="myTable" class="TVP">
+                    <thead class="tableheader">
+                        <tr>
+                            <th class="Thead">Berth</th>
+                            <th class="Thead">Vessel Name</th>
+                            <th class="Thead">Estimated/Actual Time of Arrival</th>
+                            <th class="Thead">Estimated/Actual Time of Berth</th>
+                            <th class="Thead">Estimated/Actual Time of Departure</th>
+                            <th class="Thead">Cargo</th>
+                            <th class="Thead">Cargo Quantity</th>
+                            <th class="Thead">Units</th>
+                            <th class="Thead">Vessel Type</th>
+                            <th class="Thead">Operations</th>
+                            <th class="Thead">Shipper/Receiver</th>
+                            <th class="Thead">Charterer Agent</th>
+                            <th class="Thead">Current Status</th>
+                            <th class="Ticon">Edit</th> 
+                            <th class="Ticon">Delete</th>                                                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in datas %} 
+                            <tr>
+                                <td class="portColumn" style="display: none;">{{ data.Port }}</td>
+                                <td>{{data.Berth}}</td>
+                                <td>{{data.Vessel}}</td>
+                                <td>{{data.ETA_ATA_Date|date:"d/m/y" }} {{ data.ETA_ATA_Time|time:"H:i" }}</td>
+                                <td>{{data.ETB_ATB_Date|date:"d/m/y" }} {{ data.ETB_ATB_Time|time:"H:i" }}</td>
+                                <td>{{data.ETD_ATD_Date|date:"d/m/y" }} {{ data.ETD_ATD_Time|time:"H:i" }}</td>
+
+                                <!-- <td>{{data.ETA_ATA_Date}} {{ data.ETA_ATA_Time}}</td>
+                                <td>{{data.ETB_ATB_Date}} {{ data.ETB_ATB_Time}}</td>
+                                <td>{{data.ETD_ATD_Date}} {{ data.ETD_ATD_Time}}</td> -->
+
+                                <td>{{data.Cargo1}}</td>
+                                <td>{{data.CargoQty1}}</td>
+                                <td>{{data.CargoUnits1}}</td>
+                                <td class="vesselTypeColumn" >{{data.VesselType}}</td>
+                                <td>{{data.Operations}}</td>
+                                <!-- <td>{{data.Shipper}} / {{data.Receiver}}</td> -->
+                                <td>
+                                    {% if data.Shipper and data.Receiver %}
+                                        {{ data.Shipper }} / {{ data.Receiver }}
+                                    {% elif data.Shipper %}
+                                        {{ data.Shipper }}
+                                    {% elif data.Receiver %}
+                                        {{ data.Receiver }}
+                                    {% else %}
+                                        <!-- Display nothing if both are empty -->
+                                    {% endif %}
+                                </td>
+                                <td class="chartererAgentColumn" >{{data.ChartererAgent}}</td>
+                                <td>{{data.CurrentStatus}}</td>
+                                <td><a href="/UpdateLineup/{{data.id}}"><img class="edt" src="{% static 'assets/Images/pencil-solid.png' %}" alt=""></a></td>
+                                <td><a href="/DeleteLineup/{{data.id}}"><img class="edt" src="{% static 'assets/Images/trash-solid.png' %}" alt=""></a></td>                             
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                    
+            </Section> 
+        </section>
+    </main>
+<script src="{% static 'js/lineupForm.js' %}"></script>    
+{% endblock %}
