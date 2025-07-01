@@ -323,12 +323,11 @@ def AddPortBerth_pg(request):
 
         # Extract Section 2 data (multiple entries)
         berths = request.POST.getlist('berth')
-        berth_types = request.POST.getlist('berthType')
         cargos_handled = request.POST.getlist('cargoType')
         terminals = request.POST.getlist('terminal')
 
         # Validate that all fields are present
-        if country and port and berths and berth_types and cargos_handled and terminals:
+        if country and port and berths and cargos_handled and terminals:
             # Save each Berth entry
             for i in range(len(berths)):
                 Port_Berth_Form.objects.create(
@@ -338,7 +337,6 @@ def AddPortBerth_pg(request):
                     PIC2Mail=pic2_mail.lower(),
                     PIC3Mail=pic3_mail.lower(),
                     Berth=berths[i],
-                    Berth_Type=berth_types[i],
                     Cargos_Handled_on_Berth=cargos_handled[i],
                     Terminal=terminals[i]
                 )

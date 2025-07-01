@@ -1,6 +1,15 @@
 from django.apps import AppConfig
 from django.conf import settings
 
+
+class AppConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'App'
+
+from django.apps import AppConfig
+from django.conf import settings
+
+
 class AppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'App'
@@ -10,7 +19,7 @@ class AppConfig(AppConfig):
         from apscheduler.schedulers.background import BackgroundScheduler
         from django_apscheduler.jobstores import DjangoJobStore
         from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
-        from App.jobs import move_sailed_data, send_port_update_emails, send_port_update_missed_emails
+        from App.jobs import move_sailed_data, send_port_update_emails_1, send_port_update_emails_2, send_port_update_emails_3, send_port_update_missed_emails
         import logging
         import os
 
@@ -39,18 +48,18 @@ class AppConfig(AppConfig):
             )
 
             scheduler.add_job(
-                send_port_update_emails,
+                send_port_update_emails_1,
                 trigger='cron',
                 hour=11,
                 minute=30,
-                id='send_port_update_emails',
+                id='send_port_update_emails_1',
                 replace_existing=True,
                 coalesce=True,
                 max_instances=1,
             )
 
             scheduler.add_job(
-                send_port_update_emails,
+                send_port_update_emails_2,
                 trigger='cron',
                 hour=12,
                 minute=30,
@@ -61,11 +70,11 @@ class AppConfig(AppConfig):
             )
 
             scheduler.add_job(
-                send_port_update_emails,
+                send_port_update_emails_3,
                 trigger='cron',
                 hour=13,
                 minute=30,
-                id='send_port_update_emails',
+                id='send_port_update_emails_3',
                 replace_existing=True,
                 coalesce=True,
                 max_instances=1,
@@ -89,7 +98,3 @@ class AppConfig(AppConfig):
             logger.info("Scheduler started successfully.")
         except Exception as e:
             logger.error("Scheduler failed to start: %s", str(e))
-
-
-
-
