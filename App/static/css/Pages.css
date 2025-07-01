@@ -492,3 +492,9 @@ p{
     font-family: monospace;
     font-size: 13px;
 }
+.comment{
+    font-family: monospace;
+    font-size: 11px;
+    color: red;
+    font-style: italic;
+}

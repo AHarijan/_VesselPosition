@@ -53,7 +53,7 @@
                     <label for="berth">Berth:</label>
                     <input list="berth" id="berth" class="fill" name="berth" required>
                 </div>
-                <div class="item">
+                <!-- <div class="item">
                     <label for="berthType">Berth Type:</label>
                     <select id="berthType" class="SelFil" name="berthType" required>
                         <option value="">Select</option>
@@ -71,10 +71,13 @@
                         <option value="Vehical Carrier">VEHICAL CARRIER</option>
                         <option value="Vessel Repair Work">VESSEL REPAIR WORK</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="item">
-                    <label for="cargoType">Cargos Handled on Berth:</label>
-                    <input name="cargoType" id="cargoType" class="fill1" name="cargoType" placeholder="Write all the cargo handled at berth followed by '/'" required>
+                    <div cargoHandled>
+                        <label for="cargoType">Cargos Handled on Berth: </label>
+                        <p class="comment">(Write all the cargo handled at berth followed by '/')</p>
+                    </div>
+                    <input name="cargoType" id="cargoType" class="fill1" name="cargoType" required >
                 </div>
                 <div class="item">
                     <label for="terminal">Terminal:</label>
