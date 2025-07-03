@@ -18,57 +18,6 @@
             </div>
 
         </header>    
-        <!-- <form class="mainForm" method="post" onsubmit="return addPortBerth()">
-            {% csrf_token %}
-            <section class="form1">
-                <h1 class="h1T">Berth Information</h1>
-                <div class="item">
-                    <label for="country">Country:</label>
-                    <input list="country" id="country" class="fill" name="country" required>
-                </div>
-                <div class="item">
-                    <label for="port">Port:</label>
-                    <input list="port" id="port" class="fill" name="port" required>
-                </div>
-                <div class="item">
-                    <label for="1st_pic">Person In Charges</label>
-                    <input list="1st_pic" id="1st_pic" class="fill" name="1st_pic" required>
-                </div>
-                <div class="item">
-                    <label for="2st_pic">Manager</label>
-                    <input list="2st_pic" id="2st_pic" class="fill" name="2st_pic" required>
-                </div>
-                <div class="item">
-                    <label for="3st_pic">Zonal Manager</label>
-                    <input list="3st_pic" id="3st_pic" class="fill" name="3st_pic" required>
-                </div>
-            </section>
-            <section class="button">
-                <button class="Submitb" type="button" name="addPort" id="addPort">Add Another Berth</button>
-                <button class="Submitb" type="reset" name="clearAll" id="clearAll">Reset</button>
-                <button class="Submitb" type="submit" name="submit" id="submit">Submit</button>
-            </section>
-            <section id="portAdd" class="form2">
-                <div class="item">
-                    <label for="berth">Berth:</label>
-                    <input list="berth" id="berth" class="fill" name="berth" required>
-                </div>
-                <div class="item">
-                    <div cargoHandled>
-                        <label for="cargoType">Cargos Handled on Berth: </label>
-                        <p class="comment">(Write all the cargo handled at berth followed by '/')</p>
-                    </div>
-                    <input name="cargoType" id="cargoType" class="fill1" name="cargoType" required >
-                </div>
-                <div class="item">
-                    <label for="terminal">Terminal:</label>
-                    <input list="terminal" id="terminal" class="fill" name="terminal">
-                </div>
-            </section>
-            <footer>
-                
-            </footer>
-        </form> -->
         <form class="mainForm" method="post" id="portBerthForm">
         {% csrf_token %}
         <section class="form1">
@@ -95,14 +44,20 @@
             </div>
         </section>
 
-        
-
         <div id="berthSections">
             <!-- Initial berth section -->
             <section class="form2 berth-section">
                 <div class="item">
                     <label for="berth">Berth:</label>
                     <input list="berth" class="fill" name="berth" required>
+                </div>
+                <div class="item">
+                    <label for="PermissibleDraft">Permissible Draft In Mtrs:</label>
+                    <input list="PermissibleDraft" class="fill" name="PermissibleDraft" required>
+                </div>
+                <div class="item">
+                    <label for="LOBerth">Length of Berth:</label>
+                    <input list="LOBerth" class="fill" name="LOBerth" required>
                 </div>
                 <div class="item">
                     <div cargoHandled>
@@ -114,6 +69,10 @@
                 <div class="item">
                     <label for="terminal">Terminal:</label>
                     <input list="terminal" class="fill" name="terminal">
+                </div>
+                <div class="item">
+                    <label for="BerthRemarks">Remarks:</label>
+                    <input list="BerthRemarks" class="fill" name="BerthRemarks">
                 </div>
                 <button type="button" class="Submitb remove-berth">Remove Berth</button>
             </section>

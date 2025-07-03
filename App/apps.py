@@ -41,8 +41,8 @@ class AppConfig(AppConfig):
             scheduler.add_job(
                 move_sailed_data,
                 trigger='cron',
-                hour=1,
-                minute=48,  
+                hour=23,
+                minute=59,  
                 id='move_sailed_data',
                 replace_existing=True
             )
@@ -50,8 +50,8 @@ class AppConfig(AppConfig):
             scheduler.add_job(
                 send_port_update_emails_1,
                 trigger='cron',
-                hour=11,
-                minute=30,
+                hour=21,
+                minute=20,
                 id='send_port_update_emails_1',
                 replace_existing=True,
                 coalesce=True,

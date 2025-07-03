@@ -323,8 +323,11 @@ def AddPortBerth_pg(request):
 
         # Extract Section 2 data (multiple entries)
         berths = request.POST.getlist('berth')
+        PermissibleDraft = request.POST.getlist('PermissibleDraft')
+        LOBerth = request.POST.getlist('LOBerth')
         cargos_handled = request.POST.getlist('cargoType')
         terminals = request.POST.getlist('terminal')
+        BerthRemarks = request.POST.getlist('BerthRemarks')
 
         # Validate that all fields are present
         if country and port and berths and cargos_handled and terminals:
@@ -337,8 +340,11 @@ def AddPortBerth_pg(request):
                     PIC2Mail=pic2_mail.lower(),
                     PIC3Mail=pic3_mail.lower(),
                     Berth=berths[i],
+                    PermissibleDraft=PermissibleDraft[i],
+                    LOBerth=LOBerth[i],
                     Cargos_Handled_on_Berth=cargos_handled[i],
-                    Terminal=terminals[i]
+                    Terminal=terminals[i],
+                    BerthRemarks=BerthRemarks[i],
                 )
             return redirect('addportberth')  # Redirect to a success page
         else:

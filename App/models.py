@@ -133,8 +133,11 @@ class Port_Berth_Form(models.Model):
     PIC2Mail = models.EmailField(max_length=30, default="")
     PIC3Mail = models.EmailField(max_length=30, default="")
     Berth = models.CharField(max_length=20, default="")
+    PermissibleDraft = models.CharField(max_length=20, default="")
+    LOBerth = models.CharField(max_length=20, default="")
     Cargos_Handled_on_Berth = models.CharField(max_length=200, default="")
     Terminal = models.CharField(max_length=20, default="")
+    BerthRemarks = models.CharField(max_length=100, default="")
 
     class Meta:
         verbose_name = "Port Berth Form"
