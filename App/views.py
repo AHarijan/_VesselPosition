@@ -39,7 +39,7 @@ def signup_pg(request):
             CombinedField=f"{email}_{country}_{port}",
         )
         
-        return render(request, 'AuthApp/signin.html', {'error': 'Registeration Succesful!'})  # Redirect to login page with success message
+        return render(request, 'AuthApp/signup.html', {'error': 'Registeration Succesful!'})  # Redirect to login page with success message
     return render(request, 'AuthApp/signup.html')
 
 ####### USER SIGNUP REQUEST VIA EMAIL #########
@@ -202,8 +202,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def LineupForm_pg(request):
     # Get current user's information from session
-    user_type = request.session.get('UserType')
-    user_port = request.session.get('Port', '').strip()
+    user_type = request.session.get('usertype')
+    user_port = request.session.get('port', '').strip()
     
     # Handle form submission
     if request.method == "POST":
@@ -280,7 +280,7 @@ def LineupForm_pg(request):
     selected_port = request.GET.get('port')
 
     # Apply port filtering for regular users
-    if user_type == 'user' and user_port:
+    if user_type == 'User' and user_port:
         user_ports = [p.strip() for p in user_port.split(',') if p.strip()]
         ports_queryset = ports_queryset.filter(Port__in=user_ports)
 
@@ -485,7 +485,7 @@ def get_berths(request):
     if not port:
         return JsonResponse({'berths': []})
     
-    if request.session.get('UserType') == 'user':
+    if request.session.get('UserType') == 'User':
         user_ports = [p.strip() for p in user_ports.split(',')] if user_ports else []
         if port not in user_ports:
             return JsonResponse({'berths': []})

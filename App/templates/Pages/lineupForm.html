@@ -239,7 +239,7 @@
                             <label class="lable1" for="port">Port:</label>
                             <select id="port" name="port" required onchange="filterTable()">
                                 <option value="">Select Port</option>
-                                {% if request.session.usertype == 'user' %}
+                                {% if request.session.usertype == 'User' %}
                                     {% for port in ports %}
                                         <option value="{{ port }}" selected>{{ port }}</option>
                                     {% endfor %}
@@ -253,7 +253,7 @@
                         <div class="flex2_div">
                             <label class="lable1" for="berth">Berth:</label>
                             <select id="berth" name="berth" required> 
-                                {% if request.session.usertype == 'user' %}style="display: block;"{% endif %}>
+                                {% if request.session.UserType == 'User' %}style="display: block;"{% endif %}>
                                 <option value="">Select Berth</option>
                                 {% for berth in user_berths %}
                                     <option value="{{ berth }}">{{ berth }}</option>

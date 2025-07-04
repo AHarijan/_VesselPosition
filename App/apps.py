@@ -50,8 +50,8 @@ class AppConfig(AppConfig):
             scheduler.add_job(
                 send_port_update_emails_1,
                 trigger='cron',
-                hour=21,
-                minute=20,
+                hour=11,
+                minute=30,
                 id='send_port_update_emails_1',
                 replace_existing=True,
                 coalesce=True,
