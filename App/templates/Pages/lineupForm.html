@@ -1,6 +1,8 @@
 {% extends 'Pages/base.html' %}
 {% load static %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // For users, we want to filter the table immediately based on their ports
@@ -57,7 +59,7 @@
             // Merge cells A1 to M2 and add the header
             worksheet.mergeCells('A1:K2');
             const mergedCell = worksheet.getCell('A1');
-            mergedCell.value = `ISS SHIPPING VESSEL LINEUP FOR ${selectedPort}`;
+            mergedCell.value = `VESSEL LINEUP FOR ${selectedPort}`;
             mergedCell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } }; // White text
             mergedCell.fill = {
                 type: 'pattern',

@@ -287,7 +287,7 @@ document.getElementById('exportBtn').addEventListener('click', async function() 
             const lastCol = String.fromCharCode(64 + allHeaders.length);
             worksheet.mergeCells(`A1:${lastCol}2`);
             const titleCell = worksheet.getCell('A1');
-            titleCell.value = `ISS SHIPPING VESSEL LINEUP FOR ${port}`;
+            titleCell.value = `VESSEL LINEUP FOR ${port}`;
             titleCell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
             titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0070C0' } };
             titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
