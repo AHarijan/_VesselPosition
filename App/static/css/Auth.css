@@ -140,3 +140,45 @@ center{
     font-family: monospace;
     font-size: 16px;
 }
+
+@media (max-width: 1024px) {
+    .page{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .login{
+        width: 70%;
+    }
+    .cred{
+        width: 60vw;
+    }
+    input{
+        width: 25vw
+    }
+    .botton{
+        width: 29vw
+    }
+}
+
+@media (max-width: 430px) {
+    .page{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .login{
+        width: 95%;
+    }
+    .cred{
+        width: 60vw;
+    }
+    input{
+        width: 45vw
+    }
+    .botton{
+        width: 52vw
+    }
+}
