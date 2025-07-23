@@ -71,14 +71,10 @@ header{
 
 }
 
-@media (max-width: 430px) {
+@media (max-width: 420px) {
     .title, .menu {
     display: none;
 }
-    .header{
-        width: 100%;
-    }
-
 }
 /* ############## lineupForm ############# */
 .maincontainer{
@@ -242,7 +238,7 @@ textarea{
 
 }
 
-@media (max-width: 510px) {
+@media (max-width: 420px) {
     .maincontainer{
         justify-content: center;
     }
@@ -518,20 +514,4 @@ p{
     font-size: 11px;
     color: red;
     font-style: italic;
-}
-
-@media (max-width: 510px) {
-
-    .mainForm{
-        border: none;
-    }
-    .comment{
-        width: 180px;
-    }
-    .fill1{
-        width: 150px;
-    }
-    .Submitb remove-berth{
-        width: 100px;
-    }
 }
