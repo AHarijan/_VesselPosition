@@ -238,7 +238,7 @@ textarea{
     font-family: monospace;
     font-size: 13px;
 }
-@media (max-width: 1024px) {
+@media (max-width: 510px) {
 
 }
 
@@ -380,4 +380,158 @@ select[multiple] option:checked {
     width: 200px;
     margin-left: 40px;
     margin: 2px;
+}
+/* ###############Add port Berth ######################### */
+.back{
+    position: absolute;
+    top: 20px;
+    right: 7%;
+    background-color: rgb(235, 235, 235);
+    /* background-color: #4DA1A9; */
+    height: 30px;
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    margin: 10px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 15px;
+    color: #000000;
+    text-decoration: none;
+}
+.back:hover{
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #EBF4F6;
+    color: #4DA1A9;
+}
+.Container3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mainForm{
+    display: grid;
+    justify-content: center;
+    border: 1px solid;
+    border-radius: 5px;
+    width: 35vw;
+}
+.HeaderBar {
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #949494;
+    height: 70px;
+    width: 100%;
+    color: white;
+    
+
+    border-radius: 5px;
+    position: fixed; */
+    font-size: 25px;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #949494;
+    height: 80px;
+    width: 100%;
+    color: white;
+    position: static;
+}
+.form1{
+    margin-bottom: 2vh;
+}
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: monospace;
+    font-size: 13px;
+}
+.h1T{
+    display: flex;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 25px;
+}
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2vh;
+}
+p{  
+    text-align: center;
+    top: 50%;
+}
+.extbtn, .Submitb{
+    align-items: center;
+    justify-content: center;
+    height: 4vh;
+    margin: 6px;
+    border-radius: 10px;
+    border: 1px solid;
+    width: 150px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.Submitbotton:hover, .extbtn:hover, .Submitb:hover{
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #EBF4F6;
+    color: #4DA1A9;
+}
+.form2{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 2px;
+    margin-bottom: 2vh;
+}
+.SelFil{
+    width: 29vh;
+    height: 2.5vh;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.fill1{
+    width: 13.3vw;
+    height: 6.5vh;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.comment{
+    font-family: monospace;
+    font-size: 11px;
+    color: red;
+    font-style: italic;
+}
+
+@media (max-width: 510px) {
+
+    .mainForm{
+        border: none;
+    }
+    .comment{
+        width: 180px;
+    }
+    .fill1{
+        width: 150px;
+    }
+    .Submitb remove-berth{
+        width: 100px;
+    }
 }
