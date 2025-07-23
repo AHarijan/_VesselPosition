@@ -67,14 +67,15 @@ header{
     background-color: #EBF4F6;
     color: #4DA1A9;
 }
-@media (max-width: 1024px) {
-
-}
-
-@media (max-width: 420px) {
+/* @media (max-width: 1024px) {
     .title, .menu {
-    display: none;
-}
+        display: none;
+    }
+} */
+@media all and (max-width: 800px) {
+    .title, .menu {
+        display: none;
+    }
 }
 /* ############## lineupForm ############# */
 .maincontainer{
@@ -86,16 +87,15 @@ header{
     /* background: #fdfeff; */
 }
 .container1{
-    border: 1px solid;
     display: flex;
     /* background: #fdfeff; */
     flex-wrap: wrap;
     margin: 2px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: .5vw;
+    margin-right: .5vw;
     padding: 3px;
-    height: 320px;
-    width: 340px;
+    height: 35vh;
+    width: 18vw;
     min-width: 340px;
     color: rgb(0, 0, 0);
     font-family: monospace;
@@ -234,11 +234,36 @@ textarea{
     font-family: monospace;
     font-size: 13px;
 }
-@media (max-width: 510px) {
+/* @media (max-width: 1024px) {
+    .maincontainer{
+        justify-content: center;
+    }
+    .flex2_div{
+        display: flex;
+        width: 340px;
+        color: #001325;
+    }
+    .lable1{
+        width: 100px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 13px;
+    }
+    .containersub{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        height: 18vh;
+        width: 82vw;
 
-}
+    }
+} */
 
-@media (max-width: 420px) {
+@media all and (max-width: 800px) {
     .maincontainer{
         justify-content: center;
     }

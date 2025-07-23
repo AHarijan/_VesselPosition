@@ -25,9 +25,11 @@ form{
     backdrop-filter: blur(10px);
     flex-direction: column;
     align-items: center;
+    border: 1px solid rgb(247, 244, 244);
+    border-radius: 20px;
 }
 .login{
-    border: 1px solid rgb(247, 244, 244);
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +53,7 @@ h1{
 .cred{
     display: flex;
     flex-direction: column;
-    width: 18vw;
+    width: 20vw;
     position: relative;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -141,15 +143,19 @@ center{
     font-size: 16px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 800px) {
     .page{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
+    img{
+    width: 30vw;
+    }
     .login{
-        width: 70%;
+        width: 50%;
+        height: 550px;
     }
     .cred{
         width: 60vw;
@@ -160,6 +166,10 @@ center{
     .botton{
         width: 29vw
     }
+    form{
+    height: 80%;
+    border: 1px solid rgb(247, 244, 244);
+    }
 }
 
 @media (max-width: 430px) {
@@ -169,8 +179,12 @@ center{
         align-items: center;
         justify-content: center;
     }
+    img{
+    width: 30vw;
+    }
     .login{
-        width: 95%;
+        width: 100%;
+        height: 550px;
     }
     .cred{
         width: 60vw;
@@ -180,5 +194,9 @@ center{
     }
     .botton{
         width: 52vw
+    }
+    form{
+    height: 100%;
+    border: 1px solid rgb(247, 244, 244);
     }
 }
