@@ -61,7 +61,7 @@ header{
     color: white;
     font-size: 15px;
 }
-.nav:hover{
+.nav:hover {
     font-size: 15px;
     cursor: pointer;
     background-color: #EBF4F6;
@@ -279,7 +279,6 @@ textarea{
         font-size: 13px;
     }
     .containersub{
-        border: 1px solid;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -502,7 +501,7 @@ p{
     font-size: 13px;
 }
 .Submitbotton:hover, .extbtn:hover, .Submitb:hover{
-    font-size: 17px;
+    font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     background-color: #EBF4F6;
