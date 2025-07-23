@@ -1,10 +1,12 @@
 body{
     margin: 0px;
     padding: 0px;
+    width: 100%;
     background: rgb(235, 235, 235);
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    font-family: monospace;
+    /* flex-wrap: wrap; */
 }
 .logo img{
     margin-top: 1vh;
@@ -20,15 +22,9 @@ header{
     width: 100%;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    border-radius: 5px;
-    position: fixed;
-}
-.head1{
-    width: 100%;
-    margin-right: 2%;
-    margin-left: 2%;
-    display: flex;
-    justify-content: space-between;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    /* position: fixed; */
 }
 .title{
     display: flex;
@@ -37,13 +33,9 @@ header{
 }
 .title h1{
     display: flex;
-    margin-top: 20px;
+    margin-top: 15px;
     font-family: monospace;
     font-size: 35px;
-}
-.title p{
-    display: flex;
-
 }
 .menu{
     display: flex;
@@ -55,14 +47,11 @@ header{
     font-family: monospace;
     font-size: 16px;
 }
-.ur_name{
-    overflow: hidden;
-    border-radius: 5px;
+.menu a {
     text-decoration: none;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+    color: rgb(255, 255, 255);
 }
+
 .nav{
     position: relative;
     overflow: hidden;
@@ -78,28 +67,40 @@ header{
     background-color: #EBF4F6;
     color: #4DA1A9;
 }
-/* ############## lineupForm ############# */
-form{
-    margin-top: 80px;
+@media (max-width: 1024px) {
+
 }
+
+@media (max-width: 430px) {
+    .title, .menu {
+    display: none;
+}
+    .header{
+        width: 100%;
+    }
+
+}
+/* ############## lineupForm ############# */
 .maincontainer{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    height: 39vh;
+    height: auto;
     width: 100%;
-    background: #fdfeff;
+    /* background: #fdfeff; */
 }
 .container1{
+    border: 1px solid;
     display: flex;
-    background: #fdfeff;
+    /* background: #fdfeff; */
     flex-wrap: wrap;
-    margin: .5vw;
-    margin-left: 1vw;
-    margin-right: .5vw;
-    padding: .5vw;
-    height: 35vh;
-    width: 18vw;
+    margin: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 3px;
+    height: 320px;
+    width: 340px;
+    min-width: 340px;
     color: rgb(0, 0, 0);
     font-family: monospace;
     font-size: 13px;
@@ -107,18 +108,18 @@ form{
 }
 .flex2_div{
     display: flex;
-    width: 100%;
+    width: 340px;
     color: #001325;
 }
 .lable1{
-    width: 8vw;
+    width: 150px;
     border-radius: 5px;
     font-family: monospace;
     font-size: 13px;
 }
 .fillvst{
-    width: 2.5vw;
-    height: 2.9vh;
+    width: 50px;
+    height: 25px;
     border-radius: 5px;
     padding-left: 5px;
     margin: 3px;
@@ -126,8 +127,8 @@ form{
     font-size: 13px;
 }
 .fillV{
-    width: 16.5vh;
-    height: 2.4vh;
+    width: 180px;
+    height: 21px;
     border-radius: 5px;
     border: 1px solid;
     padding-left: 5px;
@@ -136,7 +137,7 @@ form{
     font-size: 13px;
 }
 .fill{
-    width: 28vh;
+    width: 260px;
     height: 20px;
     border-radius: 5px;
     border: 1px solid;
@@ -145,12 +146,21 @@ form{
     font-family: monospace;
     font-size: 13px;
 }
+select{
+    border-radius: 5px;
+    width: 260px;
+    padding-left: 5px;
+    margin: 3px;
+    height: 2.5vh;
+    font-family: monospace;
+    font-size: 13px;
+}
 .container1-2{
     display: flex;
     margin-bottom: 1vh;
 }
 .etadatel, .etbdatel, .etcdatel{
-    width: 14vh;
+    width: 126px;
     color: #001325;
     font-family: monospace;
     font-size: 13px;
@@ -165,15 +175,15 @@ form{
     margin-left: 0px;
     border-radius: 5px;
     border: 1px solid;
-    width: 6.3vw;
-    height: 2.2vh;
+    width: 120px;
+    height: 20px;
     color: #001325;
 }
 .etatimei, .etbtimei, .etctimei{
     margin-left: 0px;
     border-radius: 5px;
     border: 1px solid;
-    width: 4.3vw;
+    width: 80px;
     height: 20px;
     color: #001325;
 }
@@ -201,46 +211,70 @@ form{
     font-family: monospace;
     font-size: 13px;
 }
-select{
-    border-radius: 5px;
-    width: 14vw;
-    padding-left: 5px;
-    margin: 3px;
-    height: 2.5vh;
-    font-family: monospace;
-    font-size: 13px;
-}
 textarea{
     height: 16vh;
-    width:17.5vw;
+    width:330px;
     border-radius: 5px;
 }
 .containersub{
+    /* border: 1px solid; */
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    justify-content: space-between;
+    /* background: #ffffff; */
     flex-wrap: wrap;
-    margin-top: 1.3vh;
-    margin-right: 2vw;
-    padding: 10px;
-    height: 35vh;
-    width: 20vh;
+    width: 200px;
+    height: 150px;
+    margin-right: 30px;
 }
 .Submitbotton{
     align-items: center;
     justify-content: center;
-    height: 4vh;
+    height: 35px;
     margin: 6px;
     border-radius: 10px;
     border: 1px solid;
-    width: 10vw;
+    width: 200px;
     font-family: monospace;
     font-size: 13px;
+}
+@media (max-width: 1024px) {
+
+}
+
+@media (max-width: 510px) {
+    .maincontainer{
+        justify-content: center;
+    }
+    .flex2_div{
+        display: flex;
+        width: 340px;
+        color: #001325;
+    }
+    .lable1{
+        width: 100px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 13px;
+    }
+    .containersub{
+        border: 1px solid;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        width: 350px;
+        height: 150px;
+
+    }
 }
 /* ################ Table Area For lineupForm & extractData ################## */
 .TableArea{
     border: 1px solid black;
-    height: 50.9vh;
+    height: 50vh;
     width: 99.50%;
     margin-top: 1vh;
     margin: 5px;
@@ -297,21 +331,19 @@ table.TVP thead {
 
 }
 /* ################ extractData ################## */
+.info{
+    height: 20px;
+}
 .maincontainer2{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    background-color: #fdfeff;
     height: 20vh;
     width: 100%;
 }
 .container2 {
     flex-wrap: wrap;
-    margin: 4px;
-    margin-left: 40px;
-    margin-right: 40px;
-    height: 13vh;
-    width: 15vw;
+    width: 350px;
     border-radius: 5px;
 }
 /* Multiple select styling */
@@ -331,15 +363,12 @@ select[multiple] option:checked {
     position: relative;
     display: flex;
 }
-.info{
-    height: 20px;
-}
 .etadatei1 {
     margin-left: 0px;
     border-radius: 5px;
     border: 1px solid;
-    width: 11.5vw;
-    height: 2.2vh;
+    width: 120px;
+    height: 20px;
     color: #001325;
 }
 .extbtn{
@@ -351,150 +380,4 @@ select[multiple] option:checked {
     width: 200px;
     margin-left: 40px;
     margin: 2px;
-}
-.TableArea1{
-    height: 75vh;
-    width: 100%;
-    margin-top: 15px;
-    border-radius: 5px;
-    overflow-x: auto;
-    overflow-y: auto;
-}
-/* ###############Add port Berth ######################### */
-.back{
-    position: absolute;
-    top: 20px;
-    right: 7%;
-    background-color: rgb(235, 235, 235);
-    /* background-color: #4DA1A9; */
-    height: 30px;
-    width: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid;
-    margin: 10px;
-    border-radius: 10px;
-    font-family: monospace;
-    font-size: 15px;
-    color: #000000;
-    text-decoration: none;
-}
-.back:hover{
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: #EBF4F6;
-    color: #4DA1A9;
-}
-.Container3{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.mainForm{
-    display: grid;
-    justify-content: center;
-    border: 1px solid;
-    border-radius: 5px;
-    width: 35vw;
-}
-.HeaderBar {
-    /* display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #949494;
-    height: 70px;
-    width: 100%;
-    color: white;
-    
-
-    border-radius: 5px;
-    position: fixed; */
-    font-size: 25px;
-    font-family: monospace;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #949494;
-    height: 80px;
-    width: 100%;
-    color: white;
-    position: static;
-}
-.form1{
-    margin-bottom: 2vh;
-}
-.item{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: monospace;
-    font-size: 13px;
-}
-.h1T{
-    display: flex;
-    justify-content: center;
-    font-family: monospace;
-    font-size: 25px;
-}
-.button{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2vh;
-}
-p{  
-    text-align: center;
-    top: 50%;
-}
-.extbtn, .Submitb{
-    align-items: center;
-    justify-content: center;
-    height: 4vh;
-    margin: 6px;
-    border-radius: 10px;
-    border: 1px solid;
-    width: 10vw;
-    font-family: monospace;
-    font-size: 13px;
-}
-.Submitbotton:hover, .extbtn:hover, .Submitb:hover{
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: #EBF4F6;
-    color: #4DA1A9;
-}
-.form2{
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 2px;
-    margin-bottom: 2vh;
-}
-.SelFil{
-    width: 29vh;
-    height: 2.5vh;
-    border-radius: 5px;
-    border: 1px solid;
-    padding-left: 5px;
-    margin: 3px;
-    font-family: monospace;
-    font-size: 13px;
-}
-.fill1{
-    width: 13.3vw;
-    height: 6.5vh;
-    border-radius: 5px;
-    border: 1px solid;
-    padding-left: 5px;
-    margin: 3px;
-    font-family: monospace;
-    font-size: 13px;
-}
-.comment{
-    font-family: monospace;
-    font-size: 11px;
-    color: red;
-    font-style: italic;
 }
