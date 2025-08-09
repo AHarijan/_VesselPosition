@@ -1,0 +1,541 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    background: rgb(235, 235, 235);
+    display: flex;
+    flex-direction: column;
+    font-family: monospace;
+    /* flex-wrap: wrap; */
+}
+.logo img{
+    margin-top: 1vh;
+    margin-left: 1vw;
+    height: 50px;
+    align-items: start;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #949494;
+    height: 70px;
+    width: 100%;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 2px;
+    margin-bottom: 15px;
+    /* position: fixed; */
+}
+.title{
+    display: flex;
+    justify-content: space-around;
+    margin-left: -20vw;
+}
+.title h1{
+    display: flex;
+    margin-top: 15px;
+    font-family: monospace;
+    font-size: 35px;
+}
+.menu{
+    display: flex;
+    justify-content: right ;
+    width: 50%;
+    margin-top: 1vh;
+    margin-right: 2vh;
+    gap: 20px;
+    font-family: monospace;
+    font-size: 16px;
+}
+.menu a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+.nav{
+    position: relative;
+    overflow: hidden;
+    padding: 1vh;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+}
+.nav:hover {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #EBF4F6;
+    color: #4DA1A9;
+}
+/* @media (max-width: 1024px) {
+    .title, .menu {
+        display: none;
+    }
+} */
+@media all and (max-width: 800px) {
+    .title, .menu {
+        display: none;
+    }
+}
+/* ############## lineupForm ############# */
+.maincontainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+    width: 100%;
+    /* background: #fdfeff; */
+}
+.container1{
+    display: flex;
+    /* background: #fdfeff; */
+    flex-wrap: wrap;
+    margin: 2px;
+    margin-left: .5vw;
+    margin-right: .5vw;
+    padding: 3px;
+    height: 35vh;
+    width: 18vw;
+    min-width: 340px;
+    color: rgb(0, 0, 0);
+    font-family: monospace;
+    font-size: 13px;
+    border-radius: 5px;
+}
+.flex2_div{
+    display: flex;
+    width: 340px;
+    color: #001325;
+}
+.lable1{
+    width: 150px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.fillvst{
+    width: 50px;
+    height: 25px;
+    border-radius: 5px;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.fillV{
+    width: 180px;
+    height: 21px;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.fill{
+    width: 260px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+select{
+    border-radius: 5px;
+    width: 260px;
+    padding-left: 5px;
+    margin: 3px;
+    height: 2.5vh;
+    font-family: monospace;
+    font-size: 13px;
+}
+.container1-2{
+    display: flex;
+    margin-bottom: 1vh;
+}
+.etadatel, .etbdatel, .etcdatel{
+    width: 126px;
+    color: #001325;
+    font-family: monospace;
+    font-size: 13px;
+}
+.etatimel, .etbtimel, .etctimel{
+    margin: 0;
+    padding: 0;
+    width: 2px;
+    color: #001325;
+}
+.etadatei, .etbdatei, .etcdatei{
+    margin-left: 0px;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 120px;
+    height: 20px;
+    color: #001325;
+}
+.etatimei, .etbtimei, .etctimei{
+    margin-left: 0px;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 80px;
+    height: 20px;
+    color: #001325;
+}
+.fillqty1, .fillqty2, .fillqty3{
+    width: 15.5vh;
+    height: 2.2vh;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.unitl1, .unitl2, .unitl3{
+    width: 34px;
+    height: 2.9vh;
+    border-radius: 5px;
+    margin: 1px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.unitsec1, .unitsec2, .unitsec3{
+    width: 70px;
+    border-radius: 5px;
+    margin: 1px;
+    font-family: monospace;
+    font-size: 13px;
+}
+textarea{
+    height: 16vh;
+    width:330px;
+    border-radius: 5px;
+}
+.containersub{
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* background: #ffffff; */
+    flex-wrap: wrap;
+    width: 200px;
+    height: 150px;
+    margin-right: 30px;
+}
+.Submitbotton{
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    margin: 6px;
+    border-radius: 10px;
+    border: 1px solid;
+    width: 200px;
+    font-family: monospace;
+    font-size: 13px;
+}
+/* @media (max-width: 1024px) {
+    .maincontainer{
+        justify-content: center;
+    }
+    .flex2_div{
+        display: flex;
+        width: 340px;
+        color: #001325;
+    }
+    .lable1{
+        width: 100px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 13px;
+    }
+    .containersub{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        height: 18vh;
+        width: 82vw;
+
+    }
+} */
+
+@media all and (max-width: 800px) {
+    .maincontainer{
+        justify-content: center;
+    }
+    .flex2_div{
+        display: flex;
+        width: 340px;
+        color: #001325;
+    }
+    .lable1{
+        width: 100px;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 13px;
+    }
+    .containersub{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+        width: 350px;
+        height: 150px;
+
+    }
+}
+/* ################ Table Area For lineupForm & extractData ################## */
+.TableArea{
+    border: 1px solid black;
+    height: 50vh;
+    width: 99.50%;
+    margin-top: 1vh;
+    margin: 5px;
+    border-radius: 5px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.TVP{
+    background-color: #f7f7f7;
+    overflow-x: auto;
+}
+.TVP th{
+    background-color: #818181;
+    text-align: center; 
+    padding: 8px;
+}
+.TVP th, .TVP td {
+    text-align: center; 
+    padding: 8px;
+    font-family: monospace;
+    font-size: 14px;
+}
+.Thead{
+    width: 8vw;
+    font-size: 14px;
+    color: white;
+    /* position: fixed; */
+}
+table.TVP thead {
+    position: sticky;
+    top: 0; 
+    background-color: #fdfdfd; 
+    z-index: 1; 
+}
+.Ticon{
+    width: 50px;
+    font-size: 14px;
+    color: white;
+}
+.edt{
+    height: 14px;
+    width: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.del{
+    height: 14px;
+    width: 14px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.redt{
+    width: 20px;
+
+}
+/* ################ extractData ################## */
+.info{
+    height: 20px;
+}
+.maincontainer2{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 20vh;
+    width: 100%;
+}
+.container2 {
+    flex-wrap: wrap;
+    width: 350px;
+    border-radius: 5px;
+}
+/* Multiple select styling */
+select[multiple] {
+    height: 110px;
+    min-height: 38px;
+    padding: 5px 0;
+}
+select[multiple] option {
+    padding: 5px 10px;
+}
+select[multiple] option:checked {
+    background-color: #0070C0;
+    color: white;
+}
+.multiselect-container {
+    position: relative;
+    display: flex;
+}
+.etadatei1 {
+    margin-left: 0px;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 120px;
+    height: 20px;
+    color: #001325;
+}
+.extbtn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 200px;
+    margin-left: 40px;
+    margin: 2px;
+}
+/* ###############Add port Berth ######################### */
+.back{
+    position: absolute;
+    top: 20px;
+    right: 7%;
+    background-color: rgb(235, 235, 235);
+    /* background-color: #4DA1A9; */
+    height: 30px;
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    margin: 10px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 15px;
+    color: #000000;
+    text-decoration: none;
+}
+.back:hover{
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #EBF4F6;
+    color: #4DA1A9;
+}
+.Container3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mainForm{
+    display: grid;
+    justify-content: center;
+    border: 1px solid;
+    border-radius: 5px;
+    width: 35vw;
+}
+.HeaderBar {
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #949494;
+    height: 70px;
+    width: 100%;
+    color: white;
+    
+
+    border-radius: 5px;
+    position: fixed; */
+    font-size: 25px;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #949494;
+    height: 80px;
+    width: 100%;
+    color: white;
+    position: static;
+}
+.form1{
+    margin-bottom: 2vh;
+}
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: monospace;
+    font-size: 13px;
+}
+.h1T{
+    display: flex;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 25px;
+}
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2vh;
+}
+p{  
+    text-align: center;
+    top: 50%;
+}
+.extbtn, .Submitb{
+    align-items: center;
+    justify-content: center;
+    height: 4vh;
+    margin: 6px;
+    border-radius: 10px;
+    border: 1px solid;
+    width: 150px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.Submitbotton:hover, .extbtn:hover, .Submitb:hover{
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #EBF4F6;
+    color: #4DA1A9;
+}
+.form2{
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 2px;
+    margin-bottom: 2vh;
+}
+.SelFil{
+    width: 29vh;
+    height: 2.5vh;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.fill1{
+    width: 13.3vw;
+    height: 6.5vh;
+    border-radius: 5px;
+    border: 1px solid;
+    padding-left: 5px;
+    margin: 3px;
+    font-family: monospace;
+    font-size: 13px;
+}
+.comment{
+    font-family: monospace;
+    font-size: 11px;
+    color: red;
+    font-style: italic;
+}
